@@ -143,7 +143,6 @@ func edytuj() {
 
 func wypisz() {
 	for _, product := range baza {
-		fmt.Printf("%+v\n", product)
 		fmt.Printf("nazwa produktu: %s cena: %.2fzł\n", product.Name, product.Price)
 	}
 }

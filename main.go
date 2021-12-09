@@ -5,6 +5,7 @@ import (
 	"encoding/gob"
 	"fmt"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -17,9 +18,11 @@ func main() {
 	2. Usuń produkt
 	3. Edytuj produkt
 	4. Wyświetl produkty
-	5. wyjscie z programu
-	6. Importowanie
-	7. Exportowanie
+	5. Sortuj rosnąco
+	6. Sortuj malejąco
+	7. wyjscie z programu
+	8. Importowanie
+	9. Exportowanie
         `
 	for {
 		fmt.Println(s)
@@ -35,10 +38,14 @@ func main() {
 		case 4:
 			wypisz()
 		case 5:
-			os.Exit(0)
+			sortuj_rosnąco()
 		case 6:
-			importowanie()
+			sortuj_malejąco()
 		case 7:
+			os.Exit(0)
+		case 8:
+			importowanie()
+		case 9:
 			eksportowanie()
 		}
 	}
@@ -145,6 +152,18 @@ type Product struct {
 	Id    int
 	Name  string
 	Price float64
+}
+
+func sortuj_rosnąco() {
+	sort.SliceStable(baza, func(i, j int) bool {
+		return baza[i].Price < baza[j].Price
+	})
+}
+
+func sortuj_malejąco() {
+	sort.SliceStable(baza, func(i, j int) bool {
+		return baza[i].Price > baza[j].Price
+	})
 }
 
 func importowanie() {

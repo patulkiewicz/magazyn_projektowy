@@ -116,7 +116,14 @@ func edytuj() {
 			var price string
 			fmt.Scanln(&price)
 			if price != "" {
-				baza[idx].Price, _ = strconv.ParseFloat(price, 64)
+				var err error
+				baza[idx].Price, err = strconv.ParseFloat(price, 64)
+				for err != nil {
+					fmt.Println("podaj prawidłową cenę używając liczb i kropki aby wprowadzić części setne")
+					fmt.Scanln(&price)
+					baza[idx].Price, err = strconv.ParseFloat(price, 64)
+
+				}
 			}
 		}
 	}
@@ -144,14 +151,18 @@ func importowanie() {
 	err := readGob("./baza.gob", &baza)
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
+	fmt.Println("baza została pomyslnie zaimportowana")
 }
 
 func eksportowanie() {
 	err := writeGob("./baza.gob", baza)
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
+	fmt.Println("baza została pomyslnie wyeksportowana do pliku baza.gob")
 }
 
 func writeGob(filePath string, object interface{}) error {
